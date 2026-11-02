@@ -1,0 +1,11 @@
+# PLACEHOLDER policy. risk_score is an uncalibrated model probability in permille (training prevalence ~40% malicious),
+# so these band edges are not tuned to any false-positive budget yet.
+bands:                      # ascending; first band whose max_permille >= score wins; last must reach 1000
+  - {name: low,    max_permille: 299,  decision: allow}
+  - {name: medium, max_permille: 699,  decision: review}
+  - {name: high,   max_permille: 1000, decision: block}
+aux_threshold: 0.5          # model aux-head probability above which a flag is raised
+model:
+  checkpoint_dir: checkpoints/m2   # full variant (all features, no normalisation)
+  config: configs/m2.yaml          # architecture / data settings the checkpoint was trained with
+max_evidence: 8             # evidence snippets shown (at most 2 per aux label)

@@ -1,0 +1,1 @@
+{"variant": "hgb_full", "runs": ["hgb_full"], "rule": "Rule: per variant, average val PR-AUC over its seeds (all-samples group); pick the highest. A variant within 0.002 of the"}

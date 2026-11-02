@@ -1,0 +1,6 @@
+bytesonly_norm_s13
+full_norm_s13
+bytesonly_norm_s1
+full_norm_s1
+bytesonly_norm_s2
+full_norm_s2

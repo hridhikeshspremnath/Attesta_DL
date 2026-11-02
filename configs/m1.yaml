@@ -1,0 +1,16 @@
+data:
+  processed: data/processed
+  max_bytes: 65536        # byte-level input length (install-time files come first in `text`)
+  drop_features: []       # numeric feature names to exclude (e.g. total_chars, min_dist_known_mal)
+mlp:
+  hidden: [64, 32]
+  dropout: 0.2
+  epochs: 30
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  seed: 13
+  aux_weight: 0.0         # 0 = main label only; >0 adds the 5 aux heads
+eval:
+  fpr: 0.001
+  report: reports/m1_mlp.md

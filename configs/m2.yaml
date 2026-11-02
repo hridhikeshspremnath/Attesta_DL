@@ -1,0 +1,33 @@
+data:
+  processed: data/processed
+  max_bytes: 65536          # install-time files come first in `text`; truncated/padded to this
+  drop_features: []         # numeric feature names to exclude
+  num_workers: 2
+model:
+  embed_dim: 8
+  filters: 128
+  kernel: 128               # conv window in bytes
+  stride: 64
+  num_hidden: 64            # numeric-feature MLP width
+  fusion_hidden: 128
+  dropout: 0.2
+train:
+  batch_size: 4             # per step; effective batch = batch_size * accum_steps
+  accum_steps: 8
+  epochs: 20
+  patience: 4               # early stop on val PR-AUC
+  lr: 0.001
+  weight_decay: 0.0001
+  aux_weight: 0.3           # loss = BCE(main) + aux_weight * sum(BCE(aux_i))
+  pos_weight: auto          # auto = n_neg/n_pos from train; or a number; null = off
+  aux_pos_weight: false     # per-aux n_neg/n_pos (clipped to 10)
+  fp16: true                # autocast + GradScaler, CUDA only (ignored on CPU)
+  seed: 13
+  ckpt_dir: checkpoints/m2
+smoke:
+  samples: 500
+  epochs: 1
+  ckpt_dir: checkpoints/m2_smoke
+eval:
+  fpr: 0.001
+  report: reports/m2_cnn.md

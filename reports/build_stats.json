@@ -1,0 +1,98 @@
+{
+ "indexed": "{('npm', '0'): 18318, ('npm', '1'): 22145, ('pypi', '0'): 7669, ('pypi', '1'): 13937}",
+ "errors": {
+  "near_empty": 710,
+  "fetch_failed": 520,
+  "FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\C:\\\\Users\\\\hridh\\\\Desktop\\\\dextop mi": 24,
+  "ValueError: too many members": 9,
+  "ConnectionError: HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out.": 6,
+  "ReadError: unexpected end of data": 4,
+  "ossf_excluded": 2,
+  "EOFError: Compressed file ended before the end-of-stream marker was reached": 1
+ },
+ "label_conflicts": 1,
+ "parse": {
+  "npm|0|aux_install_exec": [
+   18239,
+   8
+  ],
+  "npm|0|aux_network": [
+   94413,
+   26644
+  ],
+  "npm|0|aux_cred_access": [
+   94413,
+   26644
+  ],
+  "npm|0|aux_obfuscation": [
+   94413,
+   26644
+  ],
+  "npm|0|aux_process_spawn": [
+   94413,
+   26644
+  ],
+  "pypi|0|aux_install_exec": [
+   3613,
+   12
+  ],
+  "pypi|0|aux_network": [
+   95896,
+   2152
+  ],
+  "pypi|0|aux_cred_access": [
+   95896,
+   2152
+  ],
+  "pypi|0|aux_obfuscation": [
+   95896,
+   2152
+  ],
+  "pypi|0|aux_process_spawn": [
+   95896,
+   2152
+  ],
+  "npm|1|aux_install_exec": [
+   11547,
+   31
+  ],
+  "npm|1|aux_network": [
+   28756,
+   9636
+  ],
+  "npm|1|aux_cred_access": [
+   28756,
+   9636
+  ],
+  "npm|1|aux_obfuscation": [
+   28756,
+   9636
+  ],
+  "npm|1|aux_process_spawn": [
+   28756,
+   9636
+  ],
+  "pypi|1|aux_install_exec": [
+   3798,
+   202
+  ],
+  "pypi|1|aux_network": [
+   16984,
+   764
+  ],
+  "pypi|1|aux_cred_access": [
+   16984,
+   764
+  ],
+  "pypi|1|aux_obfuscation": [
+   16984,
+   764
+  ],
+  "pypi|1|aux_process_spawn": [
+   16984,
+   764
+  ]
+ },
+ "pre_cap_clusters": 32334,
+ "dropped_by_cluster_cap": 14237
+}

@@ -1,0 +1,39 @@
+data:
+  processed: data/processed
+  max_bytes: 65536
+  drop_features:
+  - total_chars
+  - n_files
+  - n_binary_types
+  - name_len
+  - min_dist_top_n
+  - min_dist_known_mal
+  num_workers: 2
+model:
+  embed_dim: 8
+  filters: 128
+  kernel: 128
+  stride: 64
+  num_hidden: 64
+  fusion_hidden: 128
+  dropout: 0.2
+train:
+  batch_size: 4
+  accum_steps: 8
+  epochs: 20
+  patience: 4
+  lr: 0.001
+  weight_decay: 0.0001
+  aux_weight: 0.3
+  pos_weight: auto
+  aux_pos_weight: false
+  fp16: true
+  seed: 2
+  ckpt_dir: checkpoints/q_noshort_s2
+smoke:
+  samples: 500
+  epochs: 1
+  ckpt_dir: checkpoints/m2_smoke
+eval:
+  fpr: 0.001
+  report: reports/queue/noshort_s2.md

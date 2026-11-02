@@ -1,0 +1,258 @@
+<title>Attesta Model Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single poster page. Header, one wide pipeline figure, a three-column row (data / training / results),
+   a decision strip, then a short list of open questions. Cool blue-grey ground, one cobalt accent for the model itself,
+   green/amber/red reserved for allow/review/block. */
+:root {
+  --bg: #edf0f4;
+  --surface: #ffffff;
+  --surface-2: #e4e9ef;
+  --ink: #101a24;
+  --ink-2: #485868;
+  --line: #cbd3dc;
+  --line-strong: #8d9bab;
+  --accent: #2447c9;
+  --accent-soft: #dce4fb;
+  --ok: #1b7a4a;
+  --ok-soft: #d9efe3;
+  --warn: #9a5c00;
+  --warn-soft: #f6e6c8;
+  --bad: #b3261e;
+  --bad-soft: #f6dcd9;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0d131a; --surface: #141c25; --surface-2: #1b2530; --ink: #e8eef4; --ink-2: #9aa9b8;
+    --line: #2b3947; --line-strong: #5d6f82; --accent: #8aa6ff; --accent-soft: #1a2750;
+    --ok: #4cc38a; --ok-soft: #14301f; --warn: #e0a23b; --warn-soft: #36290e; --bad: #ff8077; --bad-soft: #3a1815;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0d131a; --surface: #141c25; --surface-2: #1b2530; --ink: #e8eef4; --ink-2: #9aa9b8;
+  --line: #2b3947; --line-strong: #5d6f82; --accent: #8aa6ff; --accent-soft: #1a2750;
+  --ok: #4cc38a; --ok-soft: #14301f; --warn: #e0a23b; --warn-soft: #36290e; --bad: #ff8077; --bad-soft: #3a1815;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.55 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 40px;
+}
+.page { max-width: 1120px; margin: 0 auto; display: grid; gap: 26px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+h1 { font-size: clamp(34px, 6vw, 56px); font-weight: 700; line-height: 1.02; margin-top: 10px; }
+.lede { max-width: 62ch; font-size: 17px; color: var(--ink-2); margin: 12px 0 0; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 16px; font: 500 13px/1.2 var(--mono); }
+.facts b { color: var(--accent); font-weight: 500; }
+
+section { display: grid; gap: 12px; }
+h2 { font-size: 21px; font-weight: 650; }
+h2 small { font: 400 13px/1 var(--mono); color: var(--ink-2); margin-left: 8px; letter-spacing: 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 18px; }
+.scroll { overflow-x: auto; }
+figure { margin: 0; }
+figcaption { margin-top: 10px; font-size: 13px; color: var(--ink-2); max-width: 90ch; }
+
+/* pipeline svg */
+svg.flow { display: block; width: 100%; min-width: 760px; height: auto; color: var(--ink); }
+.flow text { fill: var(--ink); font-family: var(--body); }
+.flow .t { font: 600 13px var(--display); }
+.flow .s { font: 400 11px var(--mono); fill: var(--ink-2); }
+.flow .lab { font: 400 10.5px var(--mono); fill: var(--ink-2); }
+.flow .lane { font: 500 10.5px var(--mono); fill: var(--ink-2); letter-spacing: .08em; }
+.flow rect.b { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.2; }
+.flow .model rect.b { fill: var(--accent-soft); stroke: var(--accent); }
+.flow .out rect.b { fill: var(--ink); stroke: var(--ink); }
+.flow .out text { fill: var(--bg); }
+.flow .out .s { fill: var(--bg); opacity: .78; }
+.flow path.a, .flow line.a { stroke: var(--ink-2); stroke-width: 1.3; fill: none; }
+.flow .head { fill: var(--ink-2); }
+.flow .rule rect.b { stroke-dasharray: 4 3; }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; }
+.cols .panel { display: grid; gap: 12px; align-content: start; }
+h3 { font-size: 16px; font-weight: 650; }
+.split { display: flex; height: 26px; border-radius: 3px; overflow: hidden; font: 500 11px/26px var(--mono); }
+.split span { padding-left: 8px; white-space: nowrap; overflow: hidden; }
+.split .tr { background: var(--accent); color: #fff; flex: 33825; }
+.split .va { background: var(--accent-soft); color: var(--ink); flex: 4258; padding-left: 4px; }
+.split .te { background: var(--surface-2); color: var(--ink); flex: 4275; padding-left: 4px; }
+dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 14px; }
+dt { color: var(--ink-2); }
+dd { margin: 0; font-variant-numeric: tabular-nums; }
+pre.eq { margin: 0; padding: 12px 14px; background: var(--surface-2); border-radius: 4px; overflow-x: auto;
+  font: 400 12.5px/1.7 var(--mono); color: var(--ink); }
+pre.eq i { color: var(--accent); font-style: normal; }
+.note { font-size: 13px; color: var(--ink-2); margin: 0; }
+
+.bars { display: grid; gap: 9px; }
+.row { display: grid; grid-template-columns: 128px 1fr 44px; align-items: center; gap: 10px; font-size: 13px; }
+.row .track { position: relative; height: 16px; background: var(--surface-2); border-radius: 2px; }
+.row .fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); border-radius: 2px; }
+.row.base .fill { background: var(--line-strong); }
+.row .v { font: 500 12.5px var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
+.axis { display: grid; grid-template-columns: 128px 1fr 44px; gap: 10px; font: 400 10.5px var(--mono); color: var(--ink-2); }
+.axis div { display: flex; justify-content: space-between; }
+
+.bands { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.band { border-radius: 6px; padding: 14px 16px; display: grid; gap: 4px; border: 1px solid transparent; }
+.band .n { font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+.band .d { font: 700 26px/1.1 var(--display); }
+.band.allow { background: var(--ok-soft); color: var(--ok); border-color: var(--ok); }
+.band.review { background: var(--warn-soft); color: var(--warn); border-color: var(--warn); }
+.band.block { background: var(--bad-soft); color: var(--bad); border-color: var(--bad); }
+.band span.r { color: var(--ink); font-size: 13px; }
+.demo { font: 400 12.5px/1.65 var(--mono); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; overflow-x: auto; white-space: pre; }
+.demo .hot { color: var(--bad); font-weight: 500; }
+
+ul.q { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; }
+ul.q li { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; font-size: 14px; display: grid; gap: 4px; }
+ul.q b { font: 650 15px var(--display); }
+ul.q .num { font: 500 22px var(--mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+footer { font-size: 12.5px; color: var(--ink-2); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="page">
+  <header>
+    <div class="eyebrow">Supply-chain package scanner &middot; npm + PyPI</div>
+    <h1>Attesta Model Map</h1>
+    <p class="lede">A byte-level CNN and a numeric-feature network score a package from its source alone. Rule-based scanners run beside them and supply the evidence.</p>
+    <div class="facts">
+      <span><b>292k</b> parameters</span><span><b>33</b> numeric features</span>
+      <span><b>42,358</b> packages</span><span>reads <b>&le;64 KB</b> per package</span><span>nothing is installed or run</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>From archive to verdict <small>one package, left to right</small></h2>
+    <div class="panel scroll">
+      <figure>
+        <svg class="flow" viewBox="0 0 1010 400" role="img" aria-label="Pipeline: the registry archive is read in memory, files are selected, then split three ways: text to a byte CNN, numeric features to an MLP, and source to rule scanners. The CNN and MLP are fused, and everything lands in one report with a risk score, five behaviour flags and evidence.">
+          <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head" d="M0 1 L10 5 L0 9 z"/></marker></defs>
+
+          <text class="lane" x="340" y="22">TEXT LANE</text>
+          <text class="lane" x="340" y="138">NUMBERS LANE</text>
+          <text class="lane" x="340" y="248">RULES LANE</text>
+
+          <g><rect class="b" x="0" y="150" width="124" height="60" rx="4"/><text class="t" x="12" y="176">Registry archive</text><text class="s" x="12" y="196">tarball / sdist</text></g>
+          <g><rect class="b" x="164" y="150" width="130" height="60" rx="4"/><text class="t" x="176" y="176">Select files</text><text class="s" x="176" y="196">&le;30, install first</text></g>
+
+          <g><rect class="b" x="344" y="32" width="150" height="60" rx="4"/><text class="t" x="356" y="58">Text</text><text class="s" x="356" y="78">### path + code</text></g>
+          <g><rect class="b" x="344" y="148" width="150" height="64" rx="4"/><text class="t" x="356" y="172">Numeric features</text><text class="s" x="356" y="190">entropy, blobs, URLs</text><text class="s" x="356" y="204">API counts, name dist</text></g>
+          <g class="rule"><rect class="b" x="344" y="258" width="150" height="60" rx="4"/><text class="t" x="356" y="284">Rule scanners</text><text class="s" x="356" y="304">Python ast / esprima</text></g>
+
+          <g class="model"><rect class="b" x="544" y="32" width="150" height="60" rx="4"/><text class="t" x="556" y="55">Byte CNN</text><text class="s" x="556" y="72">gated conv &middot; max-pool</text><text class="s" x="556" y="85">&rarr; 128-d</text></g>
+          <g class="model"><rect class="b" x="544" y="148" width="150" height="64" rx="4"/><text class="t" x="556" y="172">Numeric MLP</text><text class="s" x="556" y="190">log1p, standardise</text><text class="s" x="556" y="204">&rarr; 64-d</text></g>
+          <g class="rule"><rect class="b" x="544" y="258" width="150" height="60" rx="4"/><text class="t" x="556" y="284">5 flags + evidence</text><text class="s" x="556" y="304">file, line, snippet</text></g>
+
+          <g class="model"><rect class="b" x="744" y="62" width="104" height="124" rx="4"/><text class="t" x="756" y="104">Fuse</text><text class="s" x="756" y="124">192 &rarr; 128</text><text class="s" x="756" y="142">two heads:</text><text class="s" x="756" y="156">1 risk + 5 aux</text></g>
+
+          <g class="out"><rect class="b" x="892" y="62" width="118" height="256" rx="4"/>
+            <text class="t" x="904" y="92">Report</text>
+            <text class="s" x="904" y="118">risk 0&ndash;1000</text>
+            <text class="s" x="904" y="138">band + decision</text>
+            <text class="s" x="904" y="170">5 model flags</text>
+            <text class="s" x="904" y="190">5 rule flags</text>
+            <text class="s" x="904" y="222">evidence</text>
+            <text class="s" x="904" y="242">file:line</text>
+            <text class="s" x="904" y="262">snippet</text>
+            <text class="s" x="904" y="296">reason line</text></g>
+
+          <line class="a" x1="124" y1="180" x2="162" y2="180" marker-end="url(#ah)"/><text class="lab" x="0" y="142">read in memory</text>
+          <path class="a" d="M294 180 C 320 180, 320 62, 342 62" marker-end="url(#ah)"/>
+          <line class="a" x1="294" y1="180" x2="342" y2="180" marker-end="url(#ah)"/>
+          <path class="a" d="M294 180 C 320 180, 320 288, 342 288" marker-end="url(#ah)"/>
+          <line class="a" x1="494" y1="62" x2="542" y2="62" marker-end="url(#ah)"/><text class="lab" x="498" y="54">bytes</text>
+          <line class="a" x1="494" y1="180" x2="542" y2="180" marker-end="url(#ah)"/><text class="lab" x="498" y="172">z-scores</text>
+          <line class="a" x1="494" y1="288" x2="542" y2="288" marker-end="url(#ah)"/>
+          <path class="a" d="M694 62 C 720 62, 720 100, 742 100" marker-end="url(#ah)"/>
+          <path class="a" d="M694 180 C 720 180, 720 148, 742 148" marker-end="url(#ah)"/>
+          <line class="a" x1="848" y1="124" x2="890" y2="124" marker-end="url(#ah)"/><text class="lab" x="744" y="206">risk = &#963;(logit) &times; 1000</text>
+          <path class="a" d="M694 288 L 890 288" marker-end="url(#ah)"/><text class="lab" x="700" y="280">flags + evidence</text>
+        </svg>
+        <figcaption>Solid blue boxes are learned. Dashed boxes are hand-written rules that never see the model's weights, so a mismatch between a model flag and a rule flag is itself a signal. The score decides the verdict; flags and evidence explain it.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="cols">
+    <section class="panel">
+      <h3>What it learned from</h3>
+      <div class="split" role="img" aria-label="Split sizes: train 33,825, validation 4,258, test 4,275"><span class="tr">train 33,825</span><span class="va">4,258</span><span class="te">4,275</span></div>
+      <dl>
+        <dt>Malicious</dt><dd>16,469 (39%)</dd>
+        <dt>&nbsp;&nbsp;DataDog set</dt><dd>12,874</dd>
+        <dt>&nbsp;&nbsp;Malware registry</dt><dd>3,595</dd>
+        <dt>Benign</dt><dd>25,889, sampled from npm and PyPI by popularity</dd>
+        <dt>Dedup</dt><dd>exact hash, &le;3 versions each, near-copy clusters capped at 20</dd>
+        <dt>Split unit</dt><dd>whole clusters, so 0 clusters shared across splits</dd>
+      </dl>
+    </section>
+
+    <section class="panel">
+      <h3>How it trains</h3>
+      <pre class="eq">z    = (log1p(x) &minus; &mu;) / &sigma;       <i># train-set stats</i>
+p    = 1 / (1 + e^&minus;logit)
+risk = round(1000 &middot; p)
+L    = BCE<sub>pos_w</sub>(main) + 0.3 &middot; &Sigma;<sub>k=1..5</sub> BCE(aux<sub>k</sub>)
+H    = &minus;&Sigma; p<sub>i</sub> log<sub>2</sub> p<sub>i</sub>          <i># text entropy feature</i></pre>
+      <p class="note">AdamW, lr 1e-3, effective batch 32 (4 &times; 8 accumulation), fp16 on a 4 GB laptop GPU, early stop on validation PR-AUC. About 2 minutes per epoch, stops after 6 to 11 epochs. The five auxiliary heads are install-time exec, network, credential access, obfuscation and process spawn.</p>
+    </section>
+
+    <section class="panel">
+      <h3>Test PR-AUC <small style="font:400 12px var(--mono);color:var(--ink-2)">mean of 3 seeds</small></h3>
+      <div class="bars" role="img" aria-label="Test PR-AUC: CNN plus features 0.960, CNN without shortcut features 0.955, CNN bytes only 0.931, MLP features only 0.951, boosted trees on features 0.964">
+        <div class="row"><span>CNN + features</span><span class="track"><span class="fill" style="width:85.7%"></span></span><span class="v">.960</span></div>
+        <div class="row"><span>CNN, no shortcuts</span><span class="track"><span class="fill" style="width:78.6%"></span></span><span class="v">.955</span></div>
+        <div class="row"><span>CNN, bytes only</span><span class="track"><span class="fill" style="width:44.3%"></span></span><span class="v">.931</span></div>
+        <div class="row base"><span>MLP, features</span><span class="track"><span class="fill" style="width:72.9%"></span></span><span class="v">.951</span></div>
+        <div class="row base"><span>Boosted trees</span><span class="track"><span class="fill" style="width:91.4%"></span></span><span class="v">.964</span></div>
+        <div class="axis"><span></span><div><span>0.90</span><span>0.935</span><span>0.97</span></div><span></span></div>
+      </div>
+      <p class="note">Axis starts at 0.90 to separate close results; the gaps are small in absolute terms. A plain boosted-tree model on the same features is already as good as the CNN, so the CNN's bytes add little.</p>
+    </section>
+  </div>
+
+  <section>
+    <h2>From score to decision <small>placeholder bands in configs/policy.yaml</small></h2>
+    <div class="bands">
+      <div class="band allow"><span class="n">low &middot; 0&ndash;299</span><span class="d">Allow</span><span class="r">lodash 4.17.21 scored 1</span></div>
+      <div class="band review"><span class="n">medium &middot; 300&ndash;699</span><span class="d">Review</span><span class="r">a human reads the evidence</span></div>
+      <div class="band block"><span class="n">high &middot; 700&ndash;1000</span><span class="d">Block</span><span class="r">known-bad samples score 950 to 1000</span></div>
+    </div>
+    <div class="demo" role="img" aria-label="Example blocked package output">npm/@shop-cicd/webpack-package-artifact@13.0.0   risk_score=993   band=high   decision=<span class="hot">block</span>
+aux            model_p  model  rules
+  install_exec   0.795  Y      Y
+  network        0.800  Y      Y
+  cred_access    0.348  -      Y
+evidence:
+  [install_exec] package.json:10  <span class="hot">preinstall: node index.js || true</span>
+  [network]      index.js:1       import http
+  [cred_access]  index.js:13      env npm_config_registry</div>
+  </section>
+
+  <section>
+    <h2>Questions a sceptic will ask</h2>
+    <ul class="q">
+      <li><span class="num">0.915</span><b>Can file paths alone give it away?</b>A classifier on path headers only reaches this AUC. Part of the model's score may reflect how the data was collected, not behaviour.</li>
+      <li><span class="num">0.849</span><b>Does the upload date leak?</b>Malicious dates are discovery dates, benign are publish dates. Year plus ecosystem alone separates the classes at this AUC.</li>
+      <li><span class="num">0.44</span><b>What does a flag mean in real traffic?</b>At 1% malware prevalence and 1% false positives, about 44% of flagged packages would be truly malicious. The scores are not calibrated yet.</li>
+    </ul>
+  </section>
+
+  <footer>Test split, 4,275 packages. Results are from the first full run and two more seeds; recall at 0.1% false positives is noisy because only about 2,600 benign packages set that threshold.</footer>
+</div>

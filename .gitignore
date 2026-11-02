@@ -1,0 +1,57 @@
+# ---- DATA: never commit (contains real malware and derived text) ----
+data/
+data/raw/
+data/interim/
+data/processed/
+data/processed_backup/
+data/cache/
+*.parquet
+*.jsonl
+*.jsonl.gz
+*.pkl
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.whl
+
+# ---- model checkpoints and run artifacts ----
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+runs/
+wandb/
+
+# ---- logs ----
+logs/
+*.log
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+.venv-dl/
+venv/
+env/
+.pytest_cache/
+.ipynb_checkpoints/
+.coverage
+*.egg-info/
+build/
+dist/
+
+# ---- secrets and local config ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# ---- OS and editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

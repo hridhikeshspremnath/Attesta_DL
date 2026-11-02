@@ -1,0 +1,51 @@
+paths:
+  raw: data/raw
+  interim: data/interim
+  processed: data/processed
+  cache: data/cache
+  reports: reports
+
+archive:
+  zip_password: infected
+  max_archive_bytes: 200000000   # skip archives larger than this
+  max_members: 20000
+  max_member_read: 200000        # bytes read per member
+
+select:
+  max_files: 30
+  max_bytes_per_file: 64000
+  max_total_bytes: 256000
+
+ingest:
+  pre_cap_versions: 8            # per package, before hashing (cheap pre-filter)
+  workers: 6
+  shard_size: 500
+
+dedup:
+  version_cap: 3                 # versions kept per package after hash dedup
+  cluster_cap: 20                # samples kept per near-dup cluster
+  minhash_perm: 64
+  minhash_threshold: 0.8
+  shingle: 5
+
+benign:
+  ratio: 1.0                     # benign:malicious target after dedup
+  extra_eval_factor: 0.5         # extra benign kept for realistic-ratio eval
+  strata: {top: 0.34, mid: 0.33, low: 0.33}
+  pypi_top_url: https://hugovk.github.io/top-pypi-packages/top-pypi-packages.min.json
+  pypi_top_cut: 1000
+  rate_per_sec: 10
+  user_agent: attesta-research/0.1 (academic dataset building; read-only metadata and tarball downloads)
+  max_download_bytes: 30000000
+  hard_negatives_per_pkg: 2
+  low_reserve: 0.3               # oversample the low bucket to cover near-empty drops
+  near_empty_chars: 300          # low-bucket registry packages with less selected text are dropped
+
+features:
+  max_text_chars: 32000
+  chunk_chars: 4000
+  top_n_names: 5000
+
+split:
+  fractions: {train: 0.8, val: 0.1, test: 0.1}
+  seed: 13
